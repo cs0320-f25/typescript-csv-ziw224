@@ -36,3 +36,17 @@ test("parseCSV doesn't validate data types", async () => {
   expect(typeof results[2][1]).toBe("string");
   expect(isNaN(Number(results[2][1]))).toBe(true); // "thirty" is not a valid number
 });
+
+test("parseCSV cannot distinguish headers from data", async () => {
+  const results = await parseCSV(WITH_HEADERS_CSV_PATH);
+
+  expect(results).toHaveLength(3);
+  
+  // The parser treats the header row exactly like data
+  expect(results[0]).toEqual(["name1", "name2", "course", "role"]);
+  expect(results[1]).toEqual(["Tim", "Nelson", "CSCI 0320", "instructor"]);
+  expect(results[2]).toEqual(["Nim", "Telson", "CSCI 0320", "student"]);
+  
+  // Problem: The parser has no way to tell the caller that row 0 contains headers
+  // A better parser would let the caller specify if headers are present
+});
