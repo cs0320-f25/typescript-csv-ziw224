@@ -50,3 +50,13 @@ test("parseCSV cannot distinguish headers from data", async () => {
   // Problem: The parser has no way to tell the caller that row 0 contains headers
   // A better parser would let the caller specify if headers are present
 });
+
+test("parseCSV fails with quoted fields containing commas", async () => {
+  const results = await parseCSV(QUOTED_COMMAS_CSV_PATH);
+  // is not a valid number when the column is supposed to be numeric
+  expect(results[2][1]).toBe("thirty"); // This is a string, not a number
+  
+  // A good parser might flag this as invalid data or provide type conversion
+  expect(typeof results[2][1]).toBe("string");
+  expect(isNaN(Number(results[2][1]))).toBe(true); // "thirty" is not a valid number
+});
