@@ -1,3 +1,6 @@
+# Link to my Github Repo:
+- https://github.com/cs0320-f25/typescript-csv-ziw224?tab=readme-ov-file#link-to-github-repo
+
 # Sprint 1: TypeScript CSV
 
 ### Task B: Proposing Enhancement
